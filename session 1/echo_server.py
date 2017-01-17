@@ -13,7 +13,9 @@ def server(log_buffer=sys.stderr):
     #       claiming that the port is already used.  You can set an option on
     #       your socket that will fix this problem. We DID NOT talk about this
     #       in class. F .python.org/3/library/socket.html#example
+
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
     # log that we are building a server
     print("making a server on {0}:{1}".format(*address), file=log_buffer)
 
@@ -49,20 +51,17 @@ def server(log_buffer=sys.stderr):
                     #       formatting
                     data = conn.recv(16)
 
-                    if data:
-
-                        print('received "{0}"'.format(data.decode('utf8')))
+                    print('received "{0}"'.format(data.decode('utf8')))
                     # TODO: Send the data you received back to the client, log
                     # the fact using the print statement here.  It will help in
                     # debugging problems.
-                        conn.sendall(data) #.encode('utf8')
+                    conn.sendall(data) #.encode('utf8')
 
-                        print('sent "{0}"'.format(data.decode('utf8')))
+                    print('sent "{0}"'.format(data.decode('utf8')))
                     # TODO: Check here to see if the message you've received is
                     # complete.  If it is, break out of this inner loop.
-                    else:
-                        return False
-                    #    break
+                    if not data:
+                        break
 
 
             finally:
